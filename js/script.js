@@ -24,14 +24,18 @@ function newHabitRow() {
     const addNewHabitRow = document.createElement("tr");
     const addNewHabitCell = document.createElement("td");
 
+    addNewHabitCell.style.height = "30px";
+
     
-    addNewHabitCell.innerText = "+";
+    // addNewHabitCell.innerText = "+";
+    addNewHabitCell.style.backgroundImage = "url('img/plus-icon.png')";
+    addNewHabitCell.style.backgroundRepeat = "no-repeat";
+    addNewHabitCell.style.backgroundPosition = "center";
     addNewHabitCell.colSpan = daysToAdd + daysToSubtract + 1 + 1; // first 1 for today, second for row headings of habit.
     
     addNewHabitCell.addEventListener("click", (event) => {
         event.stopPropagation();
         if (addNewHabitCell.children.length == 0) {
-            console.log("call");
             const newHabitDetails = document.createElement("div");
 
             const newHabitDetailsName = document.createElement("input");
@@ -87,7 +91,8 @@ function fillRowHeadings() {
         for (let day = pastDate.getDate(); day <= futureDate.getDate(); day++) {
             const dayCell = document.createElement("td");
 
-            const dayElement = document.createElement("div");
+            const dayElement = document.createElement("input");
+            dayElement.type = "checkbox";
             dayElement.className = "day";
             const isCompleted = JSON.parse(localStorage.getItem(`habit-${habitIndex}-day-${day}`)) || false;
             if (isCompleted) {
@@ -119,6 +124,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     for (let day = pastDate.getDate(); day <= futureDate.getDate(); day++) {
         const header = document.createElement("th");
+        if (today.getDate() == day) {
+            header.classList.add("today-th");
+        }
         header.innerText = day;
         headerRow.appendChild(header);
     }
